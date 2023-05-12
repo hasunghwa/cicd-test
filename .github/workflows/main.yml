@@ -40,3 +40,27 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
       shell: bash
+      
+    # zip으로 압축
+    # 현재 directory를 현재 경로에 build.zip 이름으로 압축
+    # -r 하위경로까지 모두다라는 옵션 
+    - name: Compress the result into zip file
+      run: zip -r ./build.zip .
+      shell: bash
+    
+    # aws 인증서비스
+    # github repository에서 Setting에서 사용할 암호화된 변수
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+    
+    # Upload to S3 stroage
+    - name: Upload to S3
+      run: aws s3 cp build.zip s3://sunghwa-s3-test-codedeploy/deploy/test.zip --region ap-northeast-2        
+    
+    # AWS CodeDeploy 실행 
+    - name: Code Deploy
+      run: aws deploy create-deployment --application-name WebserviceCodeDeploy --deployment-config-name CodeDeployDefault.OneAtATime --deployment-group-name WebserviceCodeDeployDeployGroup --s3-location bucket=sunghwa-s3-test-codedeploy,bundleType=zip,key=deploy/test.zip
