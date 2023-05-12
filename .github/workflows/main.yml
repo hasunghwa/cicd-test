@@ -63,4 +63,4 @@ jobs:
     
     # AWS CodeDeploy 실행 
     - name: Code Deploy
-      run: aws deploy create-deployment --application-name WebserviceCodeDeploy --deployment-config-name CodeDeployDefault.OneAtATime --deployment-group-name WebserviceCodeDeployDeployGroup --s3-location bucket=sunghwa-s3-test-codedeploy,bundleType=zip,key=deploy/test.zip
+      run: aws deploy create-deployment --application-name sunghwaCodeDeploy --deployment-config-name CodeDeployDefault.OneAtATime --deployment-group-name sunghwaCodeDeployGroup --s3-location bucket=sunghwa-s3-test-codedeploy,bundleType=zip,key=deploy/test.zip
