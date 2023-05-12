@@ -20,12 +20,12 @@ jobs:
     # 워크플로가 쓰인 프로젝트의 github 저장소의 $GITHUB_WORKSPACE에 접근할 수 있게 해줌
     # https://github.com/actions/checkout 
     - name: Checkout github workspace
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     
     # Java파일 사용을 위한 Java 환경을 다운로드
     # https://github.com/actions/setup-java
     - name: Set up JDK 17
-      uses: actions/setup-java@v1
+      uses: actions/setup-java@v2
       with:
         java-version: 17
         java-package: jdk 
